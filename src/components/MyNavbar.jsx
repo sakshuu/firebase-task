@@ -57,7 +57,7 @@ function MyNavbar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            // href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -105,6 +105,9 @@ function MyNavbar() {
                 <MenuItem>
       <Link to="/" className='nav-link'>Home</Link>
       </MenuItem>
+                <MenuItem>
+      <Link to="/post" className='nav-link'>Posts</Link>
+      </MenuItem>
               </>)
               :(<>
                             <MenuItem>
@@ -145,6 +148,9 @@ function MyNavbar() {
               <>
                 <MenuItem>
       <Link to="/" className='nav-link'>Home</Link>
+      </MenuItem>
+      <MenuItem>
+      <Link to="/post" className='nav-link'>Posts</Link>
       </MenuItem>
               </>)
               :(<>

@@ -8,15 +8,28 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { database } from './../firebase/config';
+import { useNavigate } from "react-router-dom";
+import useAuthStatus from './useAuthStatus';
 
-const pages = ['Home', 'Login', 'SignUp'];
-const settings = ['Logout'];
+
 
 function MyNavbar() {
+
+  const user = useAuthStatus();
+  const history = useNavigate()
+
+  const handleClick = () =>{
+      signOut(database).then(val=>{
+          console.log(val,"val")
+          history('/register')
+      })
+  }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -69,7 +82,7 @@ function MyNavbar() {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -87,12 +100,25 @@ function MyNavbar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              {user ? (
+              <>
+                <MenuItem>
+      <Link to="/" className='nav-link'>Home</Link>
+      </MenuItem>
+              </>)
+              :(<>
+                            <MenuItem>
+      <Link to="/login" className='nav-link'>Login</Link>
+      </MenuItem>
+      <MenuItem>
+      <Link to="/register" className='nav-link'>Register</Link>
+      </MenuItem>
+              </>
+              )}
+                  
+
+            </Menu> 
+      
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -114,18 +140,32 @@ function MyNavbar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+
+          {user ? (
+              <>
+                <MenuItem>
+      <Link to="/" className='nav-link'>Home</Link>
+      </MenuItem>
+              </>)
+              :(<>
+                            <MenuItem>
+      <Link to="/login" className='nav-link'>Login</Link>
+      </MenuItem>
+      <MenuItem>
+      <Link to="/register" className='nav-link'>Register</Link>
+      </MenuItem>
+              </>
+              )}
+                  
+      
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+
+            
+
+{user ? (
+              <>
+                        <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -147,14 +187,19 @@ function MyNavbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+      <MenuItem>
+      <Link to="/logout" className='nav-link' onClick={handleClick}>Logout</Link>
+      </MenuItem>
+      </Menu>
           </Box>
-        </Toolbar>
+              </>)
+              :(<>
+
+              </>
+              )}
+                  
+
+          </Toolbar>
       </Container>
     </AppBar>
   );

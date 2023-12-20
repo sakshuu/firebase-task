@@ -7,6 +7,7 @@ import Register from './Pages/Register'
 import Home from './Pages/Home'
 import "./App.css"
 
+
 const App = () => {
   return <>
   <MyNavbar/>

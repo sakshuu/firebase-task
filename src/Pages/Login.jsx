@@ -3,9 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -15,6 +12,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { database } from "./../firebase/config";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {  useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 const defaultTheme = createTheme();
 
@@ -22,17 +23,30 @@ export default function Login() {
 
   const navigat = useNavigate()
 
-  const handleSubmit =  (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const email = data.get('email');
+  const password = data.get('password');
 
-    signInWithEmailAndPassword(database, email, password).then(data => {
-      console.log(data, "authdata");
+  signInWithEmailAndPassword(database, email, password)
+    .then((data) => {
+      console.log(data, 'authdata');
+      navigat('/post');
     })
-navigat("/")
-  };
+          .catch((error) => {
+        console.error('Error signing in:', error.code);
+
+        if (error.code === 'auth/invalid-email') {
+          toast.error('Invalid email address'); 
+        } else if (error.code === 'auth/wrong-password') {
+          toast.error('Invalid password'); 
+        } else {
+          toast.error('Error signing in'); 
+        }
+      });
+
+};
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -89,10 +103,6 @@ navigat("/")
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -103,17 +113,15 @@ navigat("/")
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
             </Box>
+            <ToastContainer /> 
           </Box>
         </Grid>
       </Grid>

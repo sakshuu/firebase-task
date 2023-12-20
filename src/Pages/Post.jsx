@@ -2,13 +2,11 @@ import React from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Container, Grid } from '@mui/material';
+import { CardActionArea, Grid } from '@mui/material';
 
 const Post = () => {
   return <>
-  {/* <Container > */}
 
-{/* <Grid container spacing={{sm:4,md:8}} columns={{ xs: 12, sm: 8, md: 4 }}> */}
 <Grid container spacing={{ md: 3, md:2 }} columns={{  sm: 8, md: 4 }}>
 {/* <Grid > */}
    <Card >
@@ -66,7 +64,6 @@ const Post = () => {
   {/* </Grid> */}
 </Grid>
 
-{/* </Container> */}
   </>
 }
 

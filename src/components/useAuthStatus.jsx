@@ -1,8 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { database } from '../firebase/config'; // Import the initialized Firebase auth object
+import { database } from '../firebase/config'; 
 
-// Function to check the authentication status
 const useAuthStatus = () => {
   const [user, setUser] = useState(null);
 

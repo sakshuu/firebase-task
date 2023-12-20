@@ -8,6 +8,7 @@ import Home from './Pages/Home'
 import "./App.css"
 import Post from './Pages/Post'
 import 'react-toastify/dist/ReactToastify.css';
+import Details from './components/Details'
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={ <Home/>} />
           <Route path='/post' element={ <Post/>} />
+          <Route path='/:id' element={<Details/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='*' element={<Page404/>}/>

@@ -9,7 +9,7 @@ state = {data:[]},{type,payload}
         case FETCH_ALL_DATA_FAIL: return {...state, error:payload, loading: false}
 
         case FETCH_SINGLE_DATA_REQUEST: return {...state, loading: true}
-        case FETCH_SINGLE_DATA_SUCCESS: return {...state, data:payload, loading: false}
+        case FETCH_SINGLE_DATA_SUCCESS: return {...state, singlePost:payload, loading: false}
         case FETCH_SINGLE_DATA_FAIL: return {...state, error:payload, loading: false}
     
         default: return state 
